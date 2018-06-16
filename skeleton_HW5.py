@@ -37,18 +37,18 @@ def main():
     nr_components = 3
     
     #TODO set parameters
-    #tol = ...  # tolerance
-    #max_iter = ...  # maximum iterations for GN
-    #nr_components = ... #n number of components
+    tol = .1  # tolerance
+    max_iter = 20  # maximum iterations for GN
+    nr_components = 3 #n number of components
     
     #TODO: implement
     #(alpha_0, mean_0, cov_0) = init_EM(dimension = dim, nr_components= nr_components, scenario=scenario)
     #... = EM(x_2dim,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)    
-    #initial_centers = init_k_means(dimension = dim, nr_clusters=nr_components, scenario=scenario)
-    #... = k_means(x_2dim, nr_components, initial_centers, max_iter, tol)
+    initial_centers = init_k_means(dimension = dim, nr_clusters=nr_components, scenario=scenario)
+    centers, convergence, labels = k_means(x_2dim, nr_components, initial_centers, max_iter, tol)
     
     #TODO visualize your results
-
+    draw_kmeans(x_2dim, centers, labels)
 
     #------------------------
     # 2) Consider 4-dimensional data and evaluate the EM- and the KMeans- Algorithm 
@@ -91,8 +91,19 @@ def main():
     #TODO: visualize your results
     #TODO: compare PCA as pre-processing (3.) to PCA as post-processing (after 2.)
     
-    pdb.set_trace()
-    pass
+    #pdb.set_trace()
+
+
+def draw_kmeans(points, centers, labels):
+
+    for i in range(points.shape[0]):
+        for j in range(centers.shape[1]):
+            if labels[i] == j:
+                plt.scatter(points[i, 0], points[i, 1], c='C{}'.format(j))
+                break
+        c = 0
+
+    plt.show()
 
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
@@ -141,9 +152,17 @@ def init_k_means(dimension=None, nr_clusters=None, scenario=None):
     Returns:
         initial_centers... initial cluster centers,  D x nr_clusters"""
     # TODO chosse suitable inital values for each scenario
-    pass
+
+    centers = []
+    for i in range(nr_clusters):
+        x = np.random.random() * 4 + 4
+        y = np.random.random() * 6 + 1
+        centers.append( np.array([x, y]).reshape([2, 1]) )
+
+    return np.hstack(centers)
+
 #--------------------------------------------------------------------------------
-def k_means(X,K, centers_0, max_iter, tol):
+def k_means(X, K, centers_0, max_iter, tol):
     """ perform the KMeans-algorithm in order to cluster the data into K clusters
     Input:
         X... samples, nr_samples x dimension (D)
@@ -155,10 +174,29 @@ def k_means(X,K, centers_0, max_iter, tol):
         labels... class labels after performing hard classification, nr_samples x 1"""
     D = X.shape[1]
     assert D == centers_0.shape[0]
-    #TODO: iteratively update the cluster centers
-    
-    #TODO: classify all samples after convergence
-    pass
+
+    centers = centers_0
+
+    for x in range(max_iter):
+        nearestCenters = []
+        for i in range(X.shape[0]):
+            nearestCenters.append(getNearestCluster(X[i], centers))
+
+        for i in range(len(centers)):
+            try:
+                assigned_points = np.vstack( [row for index, row in enumerate(X) if nearestCenters[index] == i] )
+                centers[:, i] = np.mean(assigned_points, axis=0)
+            except ValueError:
+                print('No points assigned to cluster {}'.format(i))
+
+
+    labels = np.array( [getNearestCluster(X[i], centers) for i in range(X.shape[0])] )
+    return centers, np.zeros([X.shape[0], 1]), labels
+
+def getNearestCluster(point, centers):
+    distances = [np.linalg.norm(point - centers[:, i]) for i in range(centers.shape[1])]
+    return distances.index(max(distances))
+
 #--------------------------------------------------------------------------------
 def PCA(data,nr_dimensions=None, whitening=False):
     """ perform PCA and reduce the dimension of the data (D) to nr_dimensions
