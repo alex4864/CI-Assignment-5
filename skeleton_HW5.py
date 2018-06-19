@@ -38,7 +38,7 @@ def main():
     
     #TODO set parameters
     tol = .1  # tolerance
-    max_iter = 20  # maximum iterations for GN
+    max_iter = 200  # maximum iterations for GN
     nr_components = 3 #n number of components
     
     #TODO: implement
@@ -102,6 +102,9 @@ def draw_kmeans(points, centers, labels):
                 plt.scatter(points[i, 0], points[i, 1], c='C{}'.format(j))
                 break
         c = 0
+
+    for i in range(centers.shape[1]):
+        plt.scatter(centers[0, i], centers[1, i], c='C{}'.format(i), marker='X', linewidths=1, edgecolors=(0,0,0))
 
     plt.show()
 
@@ -182,7 +185,7 @@ def k_means(X, K, centers_0, max_iter, tol):
         for i in range(X.shape[0]):
             nearestCenters.append(getNearestCluster(X[i], centers))
 
-        for i in range(len(centers)):
+        for i in range(centers.shape[1]):
             try:
                 assigned_points = np.vstack( [row for index, row in enumerate(X) if nearestCenters[index] == i] )
                 centers[:, i] = np.mean(assigned_points, axis=0)
@@ -195,7 +198,7 @@ def k_means(X, K, centers_0, max_iter, tol):
 
 def getNearestCluster(point, centers):
     distances = [np.linalg.norm(point - centers[:, i]) for i in range(centers.shape[1])]
-    return distances.index(max(distances))
+    return distances.index(min(distances))
 
 #--------------------------------------------------------------------------------
 def PCA(data,nr_dimensions=None, whitening=False):
