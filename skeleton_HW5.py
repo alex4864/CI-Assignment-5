@@ -37,7 +37,7 @@ def main():
     nr_components = 3
     
     #TODO set parameters
-    tol = .1  # tolerance
+    tol = .001  # tolerance
     max_iter = 200  # maximum iterations for GN
     nr_components = 3 #n number of components
     
@@ -48,6 +48,7 @@ def main():
     centers, convergence, labels = k_means(x_2dim, nr_components, initial_centers, max_iter, tol)
     
     #TODO visualize your results
+    draw_EM(x_2dim,mean_0, cov_0, arr_log_likelihood, class_labels)
     draw_kmeans(x_2dim, centers, labels)
 
     #------------------------
@@ -93,7 +94,48 @@ def main():
     
     #pdb.set_trace()
 
-
+def draw_EM(points,mean_0, cov_0, arr_log_likelihood, labels):
+    
+    labes = reassign_class_labels(labels)
+    plot_iris_data(points,labels)
+    
+    x = arr_log_likelihood.size
+    plt.title("log likelihood function")
+    plt.xlabel("iterations")
+    plt.ylabel("log-likelihood")
+    plt.scatter(np.arange(x), arr_log_likelihood)
+    plt.show()
+    
+    xmin = 4
+    xmax = 8
+    ymin = 0
+    ymax = 8
+    nr_points = 50
+    
+    
+    for i in range(points.shape[0]):
+        for j in range(mean_0.shape[1]):
+            if labels[i] == j:
+                plt.scatter(points[i, 0], points[i, 1], c='C{}'.format(j))
+                break
+        c = 0
+    
+    for k in range(0, mean_0.shape[1]):
+        mu = mean_0[:,k]
+        cov = cov_0[:,:,k]
+        delta_x = float(xmax-xmin) / float(nr_points)
+        delta_y = float(ymax-ymin) / float(nr_points)
+        x = np.arange(xmin, xmax, delta_x)
+        y = np.arange(ymin, ymax, delta_y)
+        X, Y = np.meshgrid(x, y)
+        Z = mlab.bivariate_normal(X,Y,np.sqrt(cov[0][0]),np.sqrt(cov[1][1]),mu[0], mu[1], cov[0][1])
+        plt.plot([mu[0]],[mu[1]],'r+') # plot the mean as a single point
+        CS = plt.contour(X, Y, Z)
+        plt.clabel(CS, inline=1, fontsize=10)
+    plt.show()
+    
+    
+    
 def draw_kmeans(points, centers, labels):
 
     for i in range(points.shape[0]):
@@ -120,7 +162,7 @@ def init_EM(x_dim, dimension=2,nr_components=3, scenario=None):
         alpha_0... initial weight of each component, 1 x nr_components
         mean_0 ... initial mean values, D x nr_components
         cov_0 ...  initial covariance for each component, D x D x nr_components"""
-    # TODO choose suitable initial values for each scenario
+    
     alpha_0 = np.full((1, nr_components), 1/nr_components);
     
     mean_0 = np.zeros([dimension, nr_components])
