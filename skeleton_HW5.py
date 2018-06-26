@@ -105,6 +105,14 @@ def main():
     ])
 
     Y = sample_GMM(alpha, mu, cov, 100)
+
+    dim = 2
+    nr_components = 3
+
+    alpha_0, mean_0, cov_0 = init_EM(Y, dimension=dim, nr_components=nr_components)
+    alpha, mean, cov, arr_log_likelihood, class_labels = EM(x_2dim, nr_components, alpha_0, mean_0, cov_0,
+                                                                    max_iter, tol)
+
     plt.scatter(Y[:,0], Y[:,1])
     plt.show()
 
