@@ -24,8 +24,6 @@ def main():
     ## (b) construct the datasets
     x_2dim = data[:, [0,2]]
     x_4dim = data
-    #TODO: implement PCA
-    (x_2dim_pca, explained) = PCA(data,nr_dimensions=2,whitening=False)
 
     ## (c) visually inspect the data with the provided function (see example below)
     plot_iris_data(x_2dim,labels)
@@ -74,6 +72,9 @@ def main():
     #------------------------
     # 3) Perform PCA to reduce the dimension to 2 while preserving most of the variance.
     # Then, evaluate the EM- and the KMeans- Algorithm  on the transformed data
+    #TODO: implement PCA
+    (x_2dim_pca, explained) = PCA(data,nr_dimensions=2,whitening=False)
+
     scenario = 3
     dim = 2
     nr_components = 3
@@ -84,7 +85,7 @@ def main():
     #nr_components = ... #n number of components
 
     #TODO: implement
-    (alpha_0, mean_0, cov_0) = init_EM(x_2dim_pca,dimension = dim, nr_components= nr_components, scenario=scenario)
+    (alpha_0, mean_0, cov_0) = init_EM(x_2dim_pca, dimension = dim, nr_components= nr_components, scenario=scenario)
     (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_2dim_pca,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
     initial_centers = init_k_means(x_2dim_pca, dimension = dim, nr_clusters=nr_components, scenario=scenario)
     centers, convergence, labels = k_means(x_2dim_pca, nr_components, initial_centers, max_iter, tol)
@@ -141,8 +142,10 @@ def sample_GMM(alpha, mu, cov, N):
 
 def draw_EM(points,mean_0, cov_0, arr_log_likelihood, labels):
 
-    labes = reassign_class_labels(labels)
-    plot_iris_data(points,labels)
+    newLabel = reassign_class_labels(labels)
+    for label in np.nditer(labels, op_flags=['readwrite']):
+        label[...] = newLabel[label]
+    plot_iris_data(points, labels)
 
     x = arr_log_likelihood.size
     plt.title("log likelihood function")
