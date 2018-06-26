@@ -42,8 +42,8 @@ def main():
     nr_components = 3 #n number of components
     
     #TODO: implement
-    #(alpha_0, mean_0, cov_0) = init_EM(dimension = dim, nr_components= nr_components, scenario=scenario)
-    #... = EM(x_2dim,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)    
+    (alpha_0, mean_0, cov_0) = init_EM(x_2dim,dimension = dim, nr_components= nr_components, scenario=scenario)
+    (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_2dim,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)    
     initial_centers = init_k_means(dimension = dim, nr_clusters=nr_components, scenario=scenario)
     centers, convergence, labels = k_means(x_2dim, nr_components, initial_centers, max_iter, tol)
     
@@ -147,7 +147,7 @@ def draw_kmeans(points, centers, labels):
 
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
-def init_EM(dimension=2,nr_components=3, scenario=None):
+def init_EM(x_dim, dimension=2,nr_components=3, scenario=None):
     """ initializes the EM algorithm
     Input: 
         dimension... dimension D of the dataset, scalar
@@ -158,7 +158,22 @@ def init_EM(dimension=2,nr_components=3, scenario=None):
         mean_0 ... initial mean values, D x nr_components
         cov_0 ...  initial covariance for each component, D x D x nr_components"""
     # TODO choose suitable initial values for each scenario
-    pass
+    alpha_0 = np.full((1, nr_components), 1/nr_components);
+    
+    mean_0 = np.zeros([dimension, nr_components])
+    (r,_) = x_dim.shape
+    
+    for i in range(0, nr_components):
+        idx = np.random.randint(r,size = nr_components)
+        sample_m = x_dim[idx,:]
+        mean_0[:,i] = np.mean(sample_m, axis=0)
+    
+    cov_1 = np.cov(x_dim[:,0],x_dim[:,1])
+    cov_0 = np.zeros([dimension, dimension, nr_components])
+    for i in range(0, nr_components):
+        cov_0[:,:,i] = cov_1
+    
+    return (alpha_0, mean_0, cov_0)
 #--------------------------------------------------------------------------------
 def EM(X,K,alpha_0,mean_0,cov_0, max_iter, tol):
     """ perform the EM-algorithm in order to optimize the parameters of a GMM
@@ -176,12 +191,49 @@ def EM(X,K,alpha_0,mean_0,cov_0, max_iter, tol):
         log_likelihood... log-likelihood over all iterations, nr_iterations x 1
         labels... class labels after performing soft classification, nr_samples x 1"""
     # compute the dimension 
+    nr_samples = X.shape[0]
     D = X.shape[1]
     assert D == mean_0.shape[0]
-    #TODO: iteratively compute the posterior and update the parameters
+    arr_log_likelihood = np.zeros([max_iter,1])
+
+    prob_a = np.zeros([nr_samples, K])
     
-    #TODO: classify all samples after convergence
-    pass
+    for it in range(0,max_iter):
+        
+        #E-step compute Rmk
+        x_prob = np.zeros([nr_samples, K])
+        for k in range(0, K):
+            x_prob[:,k] = multivariate_normal.pdf(X, mean_0[:,k], cov_0[:,:,k])
+        prob_a = np.multiply(alpha_0, x_prob)
+        
+        sum_prob = prob_a.sum(axis=1, keepdims=True)
+        arr_log_likelihood[it] = np.sum(np.log10(sum_prob))
+        if it != 0 and abs(arr_log_likelihood[it] - arr_log_likelihood[it-1]) < tol :
+            arr_log_likelihood = arr_log_likelihood[0:it] 
+            break;
+        
+        rmk = prob_a/sum_prob
+            
+        #M-step
+        Nk = rmk.sum(axis=0)
+        for k in range(0,K):
+            mul = X * np.reshape(rmk[:,k],[nr_samples,1])
+            mean_0[:,k] = np.sum(mul,axis = 0)/Nk[k]
+        
+        for k in range(0 ,K):
+            xm = np.transpose(X)-np.reshape(mean_0[:,k],[D,1])
+            new_cov = np.zeros([D,D])
+            for m in range(0,nr_samples):
+                xmm = np.reshape(xm[:,m],[D,1])
+                mul = np.matmul(xmm,np.transpose(xmm))
+                new_cov = new_cov + rmk[m,k]*(mul)
+            new_cov = new_cov/Nk[k]
+            cov_0[:,:,k] = new_cov[:,:]
+        N = np.sum(Nk)
+        alpha_0 = Nk/N
+    
+    class_label = np.argmax(prob_a, axis=1)
+    return(alpha_0, mean_0, cov_0, arr_log_likelihood, class_label)
 #--------------------------------------------------------------------------------
 def init_k_means(dimension=None, nr_clusters=None, scenario=None):
     """ initializes the k_means algorithm
