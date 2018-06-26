@@ -380,6 +380,8 @@ def PCA(data,nr_dimensions=None, whitening=False):
     evectors = evectors[:,idx]
 
     principalComponents = evectors[:, 0:dim]
+    if whitening:
+        principalComponents = np.matmul(np.sqrt(np.diag(evalues[:dim])), principalComponents.T).T
 
     dt = np.matmul(da, principalComponents)
 
@@ -391,6 +393,8 @@ def PCA(data,nr_dimensions=None, whitening=False):
     print('associated eigenvalues', evalues[:dim])
     print('explained', np.sum(evalues[:dim])/np.sum(evalues))
     print('neglected eigenvalues', evalues[dim:])
+
+    return dt
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # Helper Functions
