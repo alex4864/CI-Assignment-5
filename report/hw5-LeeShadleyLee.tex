@@ -21,7 +21,7 @@
 			Lee       & Dayeong    & 11739321             \\ \hline
 		\end{tabular}
 	\end{titlepage}
-	
+
 	\section{Classiﬁcation/ Clustering}
 	\subsection{2 dimensional feature}
 	\subsubsection{Perform all of the above-mentioned tasks for the EM algorithm.}
@@ -106,15 +106,23 @@
 
 	\subsubsection{Perform all of the above-mentioned tasks for the K-means algorithm}
 	\subsubsection{You may additionally choose any other pair of features; how would this change the classiﬁcation accuracy}
-	
+
 	\subsection{4 dimensional feature}
 	\subsubsection{How do the convergence properties and the accuracy of you classiﬁcation change in comparison to scenario 2.1? }
 	\subsubsection{Within your EM-function conﬁne the structure of the covariance matrices to diagonal matrices! What is the inﬂuence on the result.}
 	\subsection{Processing the data with PCA }
 	\subsubsection{How much of the variance in the data is explained this way?}
+        \begin{itemize}
+          \item original variance(sum of eigenvalues) -  4.499157046979866
+          \item associated eigenvalues - 4.15886089, 0.23573307
+          \item the amount of explained variance - 0.9767594057574307
+        \end{itemize}
 	\subsubsection{How does the performance of your algorithms compare to scenario 2.1 and scenario 2.2?}
+          Scenario 2.1 has no difference in performance. Actually it takes more time to do PCA.
+          The amount of explained variance is 1. The data from PCA is rotated original data that eigenvectors are the axes.
+          EM showed better performance in scenario 2.2. PCA reduced the dimension of data to 2 so it took less time and showed more accuracy.
 	\subsubsection{Apply PCA with whitening, so that the transformed data has zero mean and a unit covariance matrix. How does this inﬂuence the choice of your initialization?}
-	
+
 	\section{Samples from a Gaussian Mixture Model}
 	\subsection{Write a function Y = sample-GMM(alpha, mu, cov, N)}
 	\subsection{Using a GMM of your choice$ (K > 3)$, demonstrate the correctness of your function}
