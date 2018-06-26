@@ -93,6 +93,43 @@ def main():
     
     #pdb.set_trace()
 
+    alpha = np.array([[0.1, 0.3, 0.6]])
+    mu = np.array([[4, 4], [-2, 2], [0, 0]])
+    cov = np.array([
+        [[.2, 0],
+         [0, .2]],
+        [[.3, 0],
+         [0, .3]],
+        [[.2, .1],
+         [.1, .2]]
+    ])
+
+    Y = sample_GMM(alpha, mu, cov, 100)
+    plt.scatter(Y[:,0], Y[:,1])
+    plt.show()
+
+def sample_GMM(alpha, mu, cov, N):
+    #assert sum(alpha) == 1
+    num_gaussians = alpha.shape[1]
+
+    alpha_cumsum = [0]
+    for i in np.nditer(alpha):
+        alpha_cumsum.append(alpha_cumsum[-1] + i)
+
+    # array to store the number of samples assigned to each distribution
+    num_samples = [0] * num_gaussians
+    for i in range(N):
+        rand = np.random.rand()
+        for j in range(num_gaussians):
+            if alpha_cumsum[j] <= rand and alpha_cumsum[j + 1] > rand:
+                num_samples[j] += 1
+                break
+
+    samples = []
+    for i in range(num_gaussians):
+        samples.append(np.random.multivariate_normal(mu[i], cov[i], num_samples[i]))
+
+    return np.vstack(samples)
 
 def draw_kmeans(points, centers, labels):
 
