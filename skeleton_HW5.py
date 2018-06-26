@@ -44,7 +44,7 @@ def main():
     #TODO: implement
     (alpha_0, mean_0, cov_0) = init_EM(x_2dim,dimension = dim, nr_components= nr_components, scenario=scenario)
     (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_2dim,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
-    initial_centers = init_k_means(dimension = dim, nr_clusters=nr_components, scenario=scenario)
+    initial_centers = init_k_means(x_2dim, dimension = dim, nr_clusters=nr_components, scenario=scenario)
     centers, convergence, labels = k_means(x_2dim, nr_components, initial_centers, max_iter, tol)
 
     #TODO visualize your results
@@ -106,13 +106,6 @@ def main():
     ])
 
     Y = sample_GMM(alpha, mu, cov, 100)
-
-    dim = 2
-    nr_components = 3
-
-    alpha_0, mean_0, cov_0 = init_EM(Y, dimension=dim, nr_components=nr_components)
-    alpha, mean, cov, arr_log_likelihood, class_labels = EM(x_2dim, nr_components, alpha_0, mean_0, cov_0,
-                                                                    max_iter, tol)
 
     plt.scatter(Y[:,0], Y[:,1])
     plt.show()
@@ -290,7 +283,7 @@ def EM(X,K,alpha_0,mean_0,cov_0, max_iter, tol):
     #TODO: classify all samples after convergence
     pass
 #--------------------------------------------------------------------------------
-def init_k_means(dimension=None, nr_clusters=None, scenario=None):
+def init_k_means(X, dimension=None, nr_clusters=None, scenario=None):
     """ initializes the k_means algorithm
     Input:
         dimension... dimension D of the dataset, scalar
@@ -300,11 +293,12 @@ def init_k_means(dimension=None, nr_clusters=None, scenario=None):
         initial_centers... initial cluster centers,  D x nr_clusters"""
     # TODO chosse suitable inital values for each scenario
 
+    potential_centers = np.copy(X)
     centers = []
     for i in range(nr_clusters):
-        x = np.random.random() * 4 + 4
-        y = np.random.random() * 6 + 1
-        centers.append( np.array([x, y]).reshape([2, 1]) )
+        selection = int(np.floor(np.random.rand() * len(potential_centers)))
+        centers.append( potential_centers[selection].reshape([2, 1]) )
+        potential_centers = np.delete(potential_centers, selection, 0)
 
     return np.hstack(centers)
 
