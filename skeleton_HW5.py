@@ -25,7 +25,7 @@ def main():
     x_2dim = data[:, [0,2]]
     x_4dim = data
     #TODO: implement PCA
-    x_2dim_pca = PCA(data,nr_dimensions=2,whitening=False)
+    (x_2dim_pca, explained) = PCA(data,nr_dimensions=2,whitening=False)
 
     ## (c) visually inspect the data with the provided function (see example below)
     plot_iris_data(x_2dim,labels)
@@ -84,16 +84,20 @@ def main():
     #nr_components = ... #n number of components
 
     #TODO: implement
-    #(alpha_0, mean_0, cov_0) = init_EM(dimension = dim, nr_components= nr_components, scenario=scenario)
-    #... = EM(x_2dim_pca, nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
-    #initial_centers = init_k_means(dimension = dim, nr_cluster=nr_components, scenario=scenario)
-    #... = k_means(x_2dim_pca, nr_components, initial_centers, max_iter, tol)
+    (alpha_0, mean_0, cov_0) = init_EM(x_2dim_pca,dimension = dim, nr_components= nr_components, scenario=scenario)
+    (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_2dim_pca,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
+    initial_centers = init_k_means(x_2dim_pca, dimension = dim, nr_clusters=nr_components, scenario=scenario)
+    centers, convergence, labels = k_means(x_2dim_pca, nr_components, initial_centers, max_iter, tol)
 
-    #TODO: visualize your results
+    #TODO visualize your results
+    draw_EM(x_2dim_pca,mean_0, cov_0, arr_log_likelihood, class_labels)
+    draw_kmeans(x_2dim_pca, centers, labels, convergence)
+
     #TODO: compare PCA as pre-processing (3.) to PCA as post-processing (after 2.)
 
     #pdb.set_trace()
 
+    #GMM
     alpha = np.array([[0.05, 0.2, 0.3, 0.45]])
     mu = np.array([[4, 4], [-2, 2], [0, 0], [-2, -3]])
     cov = np.array([
@@ -389,16 +393,15 @@ def PCA(data,nr_dimensions=None, whitening=False):
 
     dt = np.matmul(da, principalComponents)
 
-
     # Have a look at the associated eigenvalues and compute the amount of varianced explained
-    print('===================')
+    explained = np.sum(evalues[:dim])/np.sum(evalues)
     print('original variance', originalVar)
     print('sum of eigenvalues', np.sum(evalues))
     print('associated eigenvalues', evalues[:dim])
-    print('explained', np.sum(evalues[:dim])/np.sum(evalues))
+    print('explained', explained)
     print('neglected eigenvalues', evalues[dim:])
 
-    return dt
+    return dt, explained
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # Helper Functions
