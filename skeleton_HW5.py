@@ -389,16 +389,15 @@ def PCA(data,nr_dimensions=None, whitening=False):
 
     dt = np.matmul(da, principalComponents)
 
-
     # Have a look at the associated eigenvalues and compute the amount of varianced explained
-    print('===================')
+    explained = np.sum(evalues[:dim])/np.sum(evalues)
     print('original variance', originalVar)
     print('sum of eigenvalues', np.sum(evalues))
     print('associated eigenvalues', evalues[:dim])
-    print('explained', np.sum(evalues[:dim])/np.sum(evalues))
+    print('explained', explained)
     print('neglected eigenvalues', evalues[dim:])
 
-    return dt
+    return dt, explained
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # Helper Functions
