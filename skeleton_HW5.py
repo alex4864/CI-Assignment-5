@@ -84,16 +84,20 @@ def main():
     #nr_components = ... #n number of components
 
     #TODO: implement
-    #(alpha_0, mean_0, cov_0) = init_EM(dimension = dim, nr_components= nr_components, scenario=scenario)
-    #... = EM(x_2dim_pca, nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
-    #initial_centers = init_k_means(dimension = dim, nr_cluster=nr_components, scenario=scenario)
-    #... = k_means(x_2dim_pca, nr_components, initial_centers, max_iter, tol)
+    (alpha_0, mean_0, cov_0) = init_EM(x_2dim_pca,dimension = dim, nr_components= nr_components, scenario=scenario)
+    (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_2dim_pca,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
+    initial_centers = init_k_means(dimension = dim, nr_clusters=nr_components, scenario=scenario)
+    centers, convergence, labels = k_means(x_2dim_pca, nr_components, initial_centers, max_iter, tol)
 
-    #TODO: visualize your results
+    #TODO visualize your results
+    draw_EM(x_2dim_pca,mean_0, cov_0, arr_log_likelihood, class_labels)
+    draw_kmeans(x_2dim_pca, centers, labels)
+
     #TODO: compare PCA as pre-processing (3.) to PCA as post-processing (after 2.)
 
     #pdb.set_trace()
 
+    #GMM
     alpha = np.array([[0.1, 0.3, 0.6]])
     mu = np.array([[4, 4], [-2, 2], [0, 0]])
     cov = np.array([
