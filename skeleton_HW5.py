@@ -25,7 +25,7 @@ def main():
     x_2dim = data[:, [0,2]]
     x_4dim = data
     #TODO: implement PCA
-    x_2dim_pca = PCA(data,nr_dimensions=2,whitening=False)
+    (x_2dim_pca, explained) = PCA(data,nr_dimensions=2,whitening=False)
 
     ## (c) visually inspect the data with the provided function (see example below)
     plot_iris_data(x_2dim,labels)
