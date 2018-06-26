@@ -37,7 +37,7 @@ def main():
     nr_components = 3
     
     #TODO set parameters
-    tol = .001  # tolerance
+    tol = .01  # tolerance
     max_iter = 200  # maximum iterations for GN
     nr_components = 3 #n number of components
     

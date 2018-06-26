@@ -1,0 +1,42 @@
+\documentclass[a4paper]{article}
+\usepackage{amsmath, amssymb, bm}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\begin{document}
+	\begin{titlepage}
+		\centering
+		{\huge \bf Assignment 5\par}
+		\vspace{1cm}
+		{\Large Computational Intelligence, SS2018\par}
+		\vspace{1cm}
+		\begin{tabular}{|l|l|l|}
+			\hline
+			\multicolumn{3}{|c|}{\textbf{Team Members}}   \\ \hline
+			Last name & First name & Matriculation Number \\ \hline
+			Lee       & Eunseo     & 11739623             \\ \hline
+			Shadley   & Alex       & 11739595             \\ \hline
+			Lee       & Dayeong    & 11730321             \\ \hline
+		\end{tabular}
+	\end{titlepage}
+	
+	\section{Classiﬁcation/ Clustering}
+	\subsection{2 dimensional feature}
+	\subsubsection{Perform all of the above-mentioned tasks for the EM algorithm.}
+	\subsubsection{Perform all of the above-mentioned tasks for the K-means algorithm}
+	\subsubsection{You may additionally choose any other pair of features; how would this change the classiﬁcation accuracy}
+	
+	\subsection{4 dimensional feature}
+	\subsubsection{How do the convergence properties and the accuracy of you classiﬁcation change in comparison to scenario 2.1? }
+	\subsubsection{Within your EM-function conﬁne the structure of the covariance matrices to diagonal matrices! What is the inﬂuence on the result.}
+	\subsection{Processing the data with PCA }
+	\subsubsection{How much of the variance in the data is explained this way?}
+	\subsubsection{How does the performance of your algorithms compare to scenario 2.1 and scenario 2.2?}
+	\subsubsection{Apply PCA with whitening, so that the transformed data has zero mean and a unit covariance matrix. How does this inﬂuence the choice of your initialization?}
+	
+	\section{Samples from a Gaussian Mixture Model}
+	\subsection{Write a function Y = sample-GMM(alpha, mu, cov, N)}
+	\subsection{Using a GMM of your choice$ (K > 3)$, demonstrate the correctness of your function}
+\end{document}
