@@ -19,14 +19,14 @@ def main():
     #------------------------
     # 0) Get the input
     ## (a) load the modified iris data
-    data, labels = load_iris_data()
+    data, llabels = load_iris_data()
 
     ## (b) construct the datasets
     x_2dim = data[:, [0,2]]
     x_4dim = data
 
     ## (c) visually inspect the data with the provided function (see example below)
-    plot_iris_data(x_2dim,labels)
+    plot_iris_data(x_2dim,llabels)
 
     #------------------------
     # 1) Consider a 2-dim slice of the data and evaluate the EM- and the KMeans- Algorithm
@@ -91,6 +91,7 @@ def main():
     centers, convergence, labels = k_means(x_2dim_pca, nr_components, initial_centers, max_iter, tol)
 
     #TODO visualize your results
+    plot_iris_data(x_2dim_pca, llabels)
     draw_EM(x_2dim_pca,mean_0, cov_0, arr_log_likelihood, class_labels)
     draw_kmeans(x_2dim_pca, centers, labels, convergence)
 
@@ -159,6 +160,12 @@ def draw_EM(points,mean_0, cov_0, arr_log_likelihood, labels):
     ymin = 0
     ymax = 8
     nr_points = 50
+
+    #pca
+    xmin = -4
+    xmax = 4
+    ymin = -2
+    ymax = 2
 
 
     for i in range(points.shape[0]):
@@ -378,7 +385,7 @@ def PCA(data,nr_dimensions=None, whitening=False):
     flag = True
     i = 0
     for sample in np.nditer(da, op_flags=['readwrite']):
-        sample[...] = sample - means[i%4]
+        sample[...] = sample - means[i%means.size]
         i += 1
 
     cov = np.cov(da.T)
