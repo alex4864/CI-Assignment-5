@@ -45,11 +45,11 @@ def main():
     (alpha_0, mean_0, cov_0) = init_EM(x_2dim,dimension = dim, nr_components= nr_components, scenario=scenario)
     (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_2dim,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
     initial_centers = init_k_means(x_2dim, dimension = dim, nr_clusters=nr_components, scenario=scenario)
-    centers, convergence, labels = k_means(x_2dim, nr_components, initial_centers, max_iter, tol)
+    centers, cumulative_distance, labels = k_means(x_2dim, nr_components, initial_centers, max_iter, tol)
 
     #TODO visualize your results
     draw_EM(x_2dim,mean_0, cov_0, arr_log_likelihood, class_labels)
-    draw_kmeans(x_2dim, centers, labels)
+    draw_kmeans(x_2dim, centers, labels, cumulative_distance)
 
     #------------------------
     # 2) Consider 4-dimensional data and evaluate the EM- and the KMeans- Algorithm
@@ -174,7 +174,7 @@ def draw_EM(points,mean_0, cov_0, arr_log_likelihood, labels):
 
     plt.show()
 
-def draw_kmeans(points, centers, labels):
+def draw_kmeans(points, centers, labels, cumulative_distance):
 
     for i in range(points.shape[0]):
         for j in range(centers.shape[1]):
@@ -186,6 +186,9 @@ def draw_kmeans(points, centers, labels):
     for i in range(centers.shape[1]):
         plt.scatter(centers[0, i], centers[1, i], c='C{}'.format(i), marker='X', linewidths=1, edgecolors=(0,0,0))
 
+    plt.show()
+
+    plt.plot(cumulative_distance)
     plt.show()
 
 #--------------------------------------------------------------------------------
@@ -317,22 +320,27 @@ def k_means(X, K, centers_0, max_iter, tol):
     assert D == centers_0.shape[0]
 
     centers = centers_0
+    cumulative_distance = np.zeros([max_iter, 1])
 
     for x in range(max_iter):
         nearestCenters = []
         for i in range(X.shape[0]):
             nearestCenters.append(getNearestCluster(X[i], centers))
 
+        cum_dist = 0
         for i in range(centers.shape[1]):
             try:
                 assigned_points = np.vstack( [row for index, row in enumerate(X) if nearestCenters[index] == i] )
                 centers[:, i] = np.mean(assigned_points, axis=0)
+                cum_dist += sum([np.linalg.norm(point - centers[:, i]) for point in assigned_points])
             except ValueError:
                 print('No points assigned to cluster {}'.format(i))
 
+        cumulative_distance[x, 0] = cum_dist
+
 
     labels = np.array( [getNearestCluster(X[i], centers) for i in range(X.shape[0])] )
-    return centers, np.zeros([X.shape[0], 1]), labels
+    return centers, cumulative_distance, labels
 
 def getNearestCluster(point, centers):
     distances = [np.linalg.norm(point - centers[:, i]) for i in range(centers.shape[1])]
