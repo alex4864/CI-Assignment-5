@@ -40,14 +40,14 @@ def main():
     nr_components = 4 #n number of components
 
     #TODO: implement
-    (alpha_0, mean_0, cov_0) = init_EM(x_4dim,dimension = dim, nr_components= nr_components, scenario=scenario)
-    (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_4dim,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
-#     initial_centers = init_k_means(x_2dim, dimension = dim, nr_clusters=nr_components, scenario=scenario)
-#     centers, cumulative_distance, labels = k_means(x_2dim, nr_components, initial_centers, max_iter, tol)
+#    (alpha_0, mean_0, cov_0) = init_EM(x_4dim,dimension = dim, nr_components= nr_components, scenario=scenario)
+#    (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_4dim,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
+    initial_centers = init_k_means(x_2dim, dimension = dim, nr_clusters=nr_components, scenario=scenario)
+    centers, cumulative_distance, labels = k_means(x_2dim, nr_components, initial_centers, max_iter, tol)
 
     #TODO visualize your results
-    draw_EM(x_4dim,mean_0, cov_0, arr_log_likelihood, class_labels)
-#     draw_kmeans(x_2dim, centers, labels, cumulative_distance)
+#    draw_EM(x_4dim,mean_0, cov_0, arr_log_likelihood, class_labels)
+    draw_kmeans(x_2dim, centers, labels, cumulative_distance)
 # 
 #     #------------------------
 #     # 2) Consider 4-dimensional data and evaluate the EM- and the KMeans- Algorithm
@@ -191,9 +191,9 @@ def draw_EM(points,mean_0, cov_0, arr_log_likelihood, labels):
     plt.show()
 
 def draw_kmeans(points, centers, labels, cumulative_distance):
-    newLabel = reassign_class_labels(labels)
-    for label in np.nditer(labels, op_flags=['readwrite']):
-        label[...] = newLabel[label]
+    #newLabel = reassign_class_labels(labels)
+    #for label in np.nditer(labels, op_flags=['readwrite']):
+    #    label[...] = newLabel[label]
 
     for i in range(points.shape[0]):
         for j in range(centers.shape[1]):
@@ -203,7 +203,7 @@ def draw_kmeans(points, centers, labels, cumulative_distance):
         c = 0
 
     for i in range(centers.shape[1]):
-        plt.scatter(centers[0, i], centers[1, i], c='C{}'.format(newLabel[i]), marker='X', linewidths=1, edgecolors=(0,0,0))
+        plt.scatter(centers[0, i], centers[1, i], c='C{}'.format(i), marker='X', linewidths=1, edgecolors=(0,0,0))
 
     plt.show()
 
