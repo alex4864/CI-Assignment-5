@@ -110,12 +110,10 @@
 
 	\begin{figure}[h]
 		\begin{center}
-			\includegraphics[width=0.5\textwidth]{number_diff.png}
-			\caption{label data}
+			\includegraphics[width=0.5\textwidth]{answer.png}
+			\caption{Original Data Labels}
 		\end{center}
 	\end{figure}
-	First array is EM algorithm classification. Second array is answer classification.\\
-	Three points are mis-classified.
 
 	\begin{figure}[h]
 		\begin{center}
@@ -123,8 +121,8 @@
 			\caption{K-means clustering with 3 centers}
 		\end{center}
 	\end{figure}
-
-	The K-means algorithm mostly succeeded in properly identifying the 3 clusters.  A couple points were misclassified, which we hypothesize is largely due to the limited explanatory power of the K-means approach.  Which is to say, since K-means classifies solely on euclidean distance, it lacks the finesse of the EM algorithm, which can employ a covariance matrix to describe more complex structures.
+	
+	Ultimately the K-means algorithm misclassified 13 samples, considerably worse than the EM algorithm, which we hypothesize is largely due to the limited explanatory power of the K-means approach.  Which is to say, since K-means classifies solely on euclidean distance, it lacks the finesse of the EM algorithm, which can employ a covariance matrix to describe more complex structures.
 
 	\clearpage
 	\item For your tests, select the correct number of components (K = 3), but also check the result when you use more or less components. How do you choose your initialization $\theta$0? Does this choice have an inﬂuence on the result
@@ -147,42 +145,19 @@
 	
 	The result of more or fewer clusters than 3, while clearly not ideal, is nonetheless fairly logical.  One can see that, as more clusters are added, what was originally a single cluster begins to be broken up into smaller, similarly sized and shaped clusters.  I also believe that K-means is a better algorithm for when distances between clusters are larger, since the algorithm seems to struggle especially with tightly packed clusters.
 
-	For initialization $\theta0$, we refered to the class pdf. The following figure is the reference class pdf.
-
-	\begin{figure}[h]
-		\begin{center}
-			\includegraphics[width=0.5\textwidth]{ref1.png}
-			\includegraphics[width=0.5\textwidth]{ref2.png}
-			\caption{The initialization process in the class pdf}
-		\end{center}
-	\end{figure}
-
-
-	
+	For initialization $\theta_0$, we selected at random as many points from the dataset as we needed centers, and used those selected points as the starting centers.  This has the beneficial for several reasons: first, it scales without modification for any number of centers less than the number of points, and second, it does not require the programmer to have any prior knowledge of the dataset they are analyzing.  This approach also ensures that every cluster is responsible for at least one point during the first iteration.	
 
 	\clearpage
-	\item plot the log-likelihood function over the iterations! What is the behavior of this function over the iterations?
+	\item plot the cumulative distance over the iterations! What is the behavior of this function over the iterations?
 
 	\begin{figure}[h]
 		\begin{center}
-			\includegraphics[width=0.5\textwidth]{log_likelihood.png}
-			\caption{The log-likelihood function over iterations}
+			\includegraphics[width=0.5\textwidth]{kmeans_convergence.png}
+			\caption{The cumulative distance over iterations}
 		\end{center}
 	\end{figure}
-	As shown in Figure 4, the log-likelihood increases over iterations. That is, likelihood increased over iterations. And about 50th iteration, the function looks convering to the value, -112.96270776709655. Therfore, the process stops even though it didn't reach the max iteration number.\\
+	The cumulative distance sharply decreases as the algorithm starts, indicating a quickly improving result, and shortly converges onto a solution.  Curiously, the cumulative distance does occasionally increase, indicating that across some iterations the result actually becomes slightly worse.\\
 
-	\item Make a scatter plot of the data that shows the result of the soft-classiﬁcation that is done in the E-step
-
-	\begin{figure}[h]
-		\begin{center}
-			\includegraphics[width=0.3\textwidth]{3class.png}
-			\caption{The EM algorithm soft-classification}
-			\includegraphics[width=0.3\textwidth]{answer.png}
-			\caption{The answer classification}
-		\end{center}
-	\end{figure}
-
-	The EM algorithm classifies well the points when it is compared with the answer classification. EM algorithm fails to classify the points near the boundary of iris-Versicolor and iris-Virgnica.
 	\end{itemize}	
 	
 	\clearpage

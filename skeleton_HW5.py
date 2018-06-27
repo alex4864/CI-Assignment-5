@@ -37,7 +37,7 @@ def main():
     #TODO set parameters
     tol = .01  # tolerance
     max_iter = 200  # maximum iterations for GN
-    nr_components = 4 #n number of components
+    nr_components = 3 #n number of components
 
     #TODO: implement
 #    (alpha_0, mean_0, cov_0) = init_EM(x_4dim,dimension = dim, nr_components= nr_components, scenario=scenario)
@@ -208,6 +208,9 @@ def draw_kmeans(points, centers, labels, cumulative_distance):
     plt.show()
 
     plt.plot(cumulative_distance)
+    plt.title('Cumulative Distance Over Iterations')
+    plt.xlabel('Iteration')
+    plt.ylabel('Cumulative Distance')
     plt.show()
 
 #--------------------------------------------------------------------------------
