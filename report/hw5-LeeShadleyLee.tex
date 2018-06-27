@@ -105,7 +105,54 @@
 	\end{itemize}
 
 	\subsubsection{Perform all of the above-mentioned tasks for the K-means algorithm}
+	\clearpage
 	\subsubsection{You may additionally choose any other pair of features; how would this change the classiﬁcation accuracy}
+	
+	The following figures are the scatter plots when two of four data columns are selected.
+	\begin{figure}[h!]
+		\centering
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{12.png}
+		\end{minipage}
+		\hspace{2cm}
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{13.png}
+		\end{minipage}
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{14.png}
+		\end{minipage}
+		\hspace{2cm}
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{23.png}
+		\end{minipage}
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{24.png}
+		\end{minipage}
+		\hspace{2cm}
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{34.png}
+		\end{minipage}
+	\end{figure}
+	
+	As shown in above figures, when first and third column are selected, we can draw a line to seperate the Iris-Virgnica and the Iris-Versicolor. That is, it is easy to differentiate these two groups. When other columns are selected, these two groups are mixed together. Therfore, EM algorithm also can not classify these two groups as different groups. For example, the worst one is when first and second columns are selected. When first and second columns are selected, the result is the following graph.
+	
+	\clearpage
+	\begin{figure}[h!]
+		\centering
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{12.png}
+			\caption{The answer classfication}
+		\end{minipage}
+		\hspace{2cm}
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{12_p.png}
+			\caption{EM algorithm classification}
+		\end{minipage}
+	\end{figure}
+	
+	As expected, the EM alogirthm result is not classified well when first and second columns are selected. That is, the EM algorithm accuracy decreased.\\ 
+	Therfore, the column selection influences the EM algorithm accuracy.
+
 
 	\subsection{4 dimensional feature}
 	\subsubsection{EM algorithm tasks}
