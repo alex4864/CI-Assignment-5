@@ -33,22 +33,22 @@ def main():
     scenario = 1
     dim = 2
     nr_components = 3
-
+ 
     #set parameters
     tol = .01  # tolerance
     max_iter = 200  # maximum iterations for GN
     nr_components = 3 #n number of components
-
+ 
     #implement
     (alpha_0, mean_0, cov_0) = init_EM(x_2dim,dimension = dim, nr_components= nr_components, scenario=scenario)
     (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_2dim,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
     initial_centers = init_k_means(x_2dim, dimension = dim, nr_clusters=nr_components, scenario=scenario)
     centers, cumulative_distance, labels = k_means(x_2dim, nr_components, initial_centers, max_iter, tol)
-
+ 
     #visualize your results
     draw_EM(x_2dim,mean_0, cov_0, arr_log_likelihood, class_labels)
     draw_kmeans(x_2dim, centers, labels, cumulative_distance)
- 
+  
     #------------------------
     # 2) Consider 4-dimensional data and evaluate the EM- and the KMeans- Algorithm
     scenario = 2
@@ -67,8 +67,8 @@ def main():
     centers, cumulative_distance, labels = k_means(x_4dim,nr_components, initial_centers, max_iter, tol)
  
     #visualize your results by looking at the same slice as in 1)
-    draw_EM(x_2dim,mean_0, cov_0, arr_log_likelihood, class_labels)
-    draw_kmeans(x_2dim, centers, labels, cumulative_distance)
+    draw_EM(x_4dim,mean_0, cov_0, arr_log_likelihood, class_labels)
+    draw_kmeans(x_4dim, centers, labels, cumulative_distance)
  
     #------------------------
     # 3) Perform PCA to reduce the dimension to 2 while preserving most of the variance.
@@ -147,7 +147,8 @@ def draw_EM(points,mean_0, cov_0, arr_log_likelihood, labels):
     newLabel = reassign_class_labels(labels)
     for label in np.nditer(labels, op_flags=['readwrite']):
         label[...] = newLabel[label]
-    plot_iris_data(points, labels)
+    
+ 
  
     #print log likelihood function
     x = arr_log_likelihood.size
@@ -156,6 +157,7 @@ def draw_EM(points,mean_0, cov_0, arr_log_likelihood, labels):
     plt.ylabel("log-likelihood")
     plt.scatter(np.arange(x), arr_log_likelihood)
     plt.show()
+    
 
     xmin = 4
     xmax = 8
@@ -192,6 +194,9 @@ def draw_EM(points,mean_0, cov_0, arr_log_likelihood, labels):
 
     plt.show()
 
+
+    plot_iris_data(points, labels)
+    
 def draw_kmeans(points, centers, labels, cumulative_distance):
     #newLabel = reassign_class_labels(labels)
     #for label in np.nditer(labels, op_flags=['readwrite']):
