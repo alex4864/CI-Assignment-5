@@ -286,8 +286,23 @@
 		Also, we compared the scenario 2.1 and 2.2 with each 10 trials. Overall, the EM classifies the data points better in 2.2 scenario. The accuarcy of 2.2 scenario is higher than that of 2.1 scenario. Because the EM algorithm in 2.2 scenario has more additional information about the dataset.
 
 	\end{itemize}
-
-	\subsubsection{Within your EM-function conﬁne the structure of the covariance matrices to diagonal matrices! What is the inﬂuence on the result.}
+	
+	\clearpage
+	\subsubsection{Within your EM-function confine the structure of the covariance matrices to diagonal matrices! What is the inﬂuence on the result.}
+	we confined the structure of the covariance matrices to diagonal matrices by setting non-diagonal matrices to 0. These following figures are the EM results with diagonal covariance matrices.
+	
+	\begin{figure}[h]
+		\begin{center}
+			\includegraphics[width=0.3\textwidth]{4_answer.png}
+			\caption{The answer classification}
+			\includegraphics[width=0.3\textwidth]{4class.png}
+			\caption{The EM algorithm soft-classification}
+			\includegraphics[width=0.3\textwidth]{4_cov0.png}
+			\caption{The EM algorithm soft-classification with diagonal covariance}
+		\end{center}
+	\end{figure}
+	
+	As shown in the figure 23,24,25, the result with diagonal covariacne, looks similar to th others. That is, the diagonal convariance doesn't influence on the result.
         \clearpage
 	\subsection{Processing the data with PCA }
 	\subsubsection{How much of the variance in the data is explained this way?}
