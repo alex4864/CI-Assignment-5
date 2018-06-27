@@ -108,7 +108,83 @@
 	\subsubsection{You may additionally choose any other pair of features; how would this change the classiﬁcation accuracy}
 
 	\subsection{4 dimensional feature}
+	\subsubsection{EM algorithm tasks}
+	\begin{itemize}
+		\item Compare the result with the labeled data set (i.e., consider labels as well). Make a scatter plot of the data and plot the Gaussian mixture model over this plot.
+		
+		\begin{figure}[h]
+			\begin{center}
+				\includegraphics[width=0.5\textwidth]{4_number_diff.png}
+				\caption{label data}
+			\end{center}
+		\end{figure}
+		First array is EM algorithm classification. Second array is answer classification.\\
+		Four points are mis-classified.
+		
+		\begin{figure}[h]
+			\begin{center}
+				\includegraphics[width=0.5\textwidth]{4_gauss.png}
+				\caption{Three gaussian with scatter data points}
+			\end{center}
+		\end{figure}
+		
+		EM algorithm suceeded to find three gaussian model and classified the data points well.
+		
+		\item For your tests, select the correct number of components (K = 3), but also check the result when you use more or less components. How do you choose your initialization $\theta$0? Does this choice have an inﬂuence on the result
+		When the number of components is 2, the result is the following figure.
+		
+		\begin{figure}[h]
+			\begin{center}
+				\includegraphics[width=0.4\textwidth]{4_K2.png}
+				\caption{K $=$ 2}
+			\end{center}
+		\end{figure}
+		
+		\clearpage
+		When the number of components is 4, the result is the following figure.
+		\begin{figure}[h]
+			\begin{center}
+				\includegraphics[width=0.4\textwidth]{4_K4.png}
+				\caption{K $=$ 4}
+			\end{center}
+		\end{figure}
+		
+		Initalizaiton $\theta$0 is the same with the dimension 2.\\
+		As written in section 1.1.1, the initialization process affects the result.
+		
+		\item plot the log-likelihood function over the iterations! What is the behavior of this function over the iterations?
+		
+		\begin{figure}[h]
+			\begin{center}
+				\includegraphics[width=0.4\textwidth]{4_log_likelihood.png}
+				\caption{The log-likelihood function over iterations}
+			\end{center}
+		\end{figure}
+		As shown in Figure 4, the log-likelihood increases over iterations. That is, likelihood increased over iterations. And about 25th iteration, the function looks convering to the value, -87.41158191236445.. Therfore, the process stops even though it didn't reach the max iteration number.\\
+		
+		\clearpage
+		\item Make a scatter plot of the data that shows the result of the soft-classiﬁcation that is done in the E-step
+		
+		\begin{figure}[h]
+			\begin{center}
+				\includegraphics[width=0.3\textwidth]{4class.png}
+				\caption{The EM algorithm soft-classification}
+				\includegraphics[width=0.3\textwidth]{4_answer.png}
+				\caption{The answer classification}
+			\end{center}
+		\end{figure}
+		
+		The EM algorithm classifies well the points when it is compared with the answer classification. EM algorithm fails to classify the points near the boundary of iris-Versicolor and iris-Virgnica.
+		
+	\end{itemize}
 	\subsubsection{How do the convergence properties and the accuracy of you classiﬁcation change in comparison to scenario 2.1? }
+	\begin{itemize}
+		\item EM-algorithm \\
+		The convergence value of log likelihood function increased. In the scenario 2.1, the value was -112.96. However, in the scenario 2.2, the value increased to -87.41. Also, the total iteration decreased in the scenario 2.2. The value decreased from 75 to 26.\\
+		Also, we compared the scenario 2.1 and 2.2 with each 10 trials. Overall, the EM classifies the data points better in 2.2 scenario. The accuarcy of 2.2 scenario is higher than that of 2.1 scenario. Because the EM algorithm in 2.2 scenario has more additional information about the dataset.
+		 
+	\end{itemize}
+	
 	\subsubsection{Within your EM-function conﬁne the structure of the covariance matrices to diagonal matrices! What is the inﬂuence on the result.}
 	\subsection{Processing the data with PCA }
 	\subsubsection{How much of the variance in the data is explained this way?}
