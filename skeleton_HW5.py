@@ -77,7 +77,7 @@ def main():
     (x_2dim_pca, explained) = PCA(data,nr_dimensions=2,whitening=False)
  
     scenario = 3
-    dim = 4
+    dim = 2
     nr_components = 3
  
     #set parameters
