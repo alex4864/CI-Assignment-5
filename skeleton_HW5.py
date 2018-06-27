@@ -63,7 +63,7 @@ def main():
     #implement
     (alpha_0, mean_0, cov_0) = init_EM(x_4dim,dimension = dim, nr_components= nr_components, scenario=scenario)
     (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_4dim, nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
-    initial_centers = init_k_means(x_4dim, dimension = dim, nr_cluster=nr_components, scenario=scenario)
+    initial_centers = init_k_means(x_4dim, dimension = dim, nr_clusters=nr_components, scenario=scenario)
     centers, cumulative_distance, labels = k_means(x_4dim,nr_components, initial_centers, max_iter, tol)
  
     #visualize your results by looking at the same slice as in 1)
@@ -330,7 +330,7 @@ def init_k_means(X, dimension=None, nr_clusters=None, scenario=None):
     centers = []
     for i in range(nr_clusters):
         selection = int(np.floor(np.random.rand() * len(potential_centers)))
-        centers.append( potential_centers[selection].reshape([2, 1]) )
+        centers.append( potential_centers[selection].reshape([dimension, 1]) )
         potential_centers = np.delete(potential_centers, selection, 0)
 
     return np.hstack(centers)
