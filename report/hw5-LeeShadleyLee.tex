@@ -264,6 +264,63 @@
         \end{figure}
         \clearpage
 	\subsubsection{Apply PCA with whitening, so that the transformed data has zero mean and a unit covariance matrix. How does this influence the choice of your initialization?}
+        Compared PCA without whitening and PCA with whitening on scenario 2(4 dimension $\rightarrow$ 2 dimension), initialization result is below.
+        \begin{itemize}
+          \item EM
+            \begin{itemize}
+              \item without whitening
+                \begin{itemize}
+                  \item $\alpha$ \\ $ \begin{bmatrix}
+                      0.33333333 & 0.33333333 & 0.33333333
+                  \end{bmatrix}  $
+                \item mean \\ $ \begin{bmatrix}
+                    1.13021491 & -0.01001823 & 1.13587265 \\
+                    0.23478179 & 0.11992288 & -0.42093766
+                \end{bmatrix}  $
+              \item covariance \\ $ \begin{bmatrix}
+                  4.15886089e+00 & 4.15886089e+00 & 4.15886089e+00 \\
+                  -8.58001217e-16 & -8.58001217e-16 & -8.58001217e-16
+              \end{bmatrix}  $ \\ $ \begin{bmatrix}
+                -8.58001217e-16 & -8.58001217e-16 & -8.58001217e-16 \\
+                2.35733074e-01 & 2.35733074e-01 & 2.35733074e-01
+              \end{bmatrix}  $
+                \end{itemize}
+              \item with whitening
+                \begin{itemize}
+                  \item $\alpha$ \\ $ \begin{bmatrix}
+                      0.33333333 & 0.33333333 & 0.33333333
+                  \end{bmatrix}  $
+                \item mean \\ $ \begin{bmatrix}
+                    0.65215026 & -2.61884422 & -2.74090941 \\
+                    -0.1535649 & -0.0246702 & -0.2064007
+                \end{bmatrix}  $
+              \item covariance \\ $ \begin{bmatrix}
+                  1.72961239e+01 & 1.72961239e+01 & 1.72961239e+01 \\
+                  -1.05433932e-15 & -1.05433932e-15 & -1.05433932e-15
+              \end{bmatrix}  $ \\ $ \begin{bmatrix}
+                -1.05433932e-15 & -1.05433932e-15 & -1.05433932e-15 \\
+                5.55700821e-02 & 5.55700821e-02 & 5.55700821e-02
+              \end{bmatrix}  $
+                \end{itemize}
+            \end{itemize}
+            The mean of sample means became close to 0 after whitening, assumed that
+            the number of choosen samples in each class is same. The covariances
+            also changed. Theoritically, the covariance matrix with 4 dimension should
+            be identity matrix. However, our covariances is not covariance matrix with 4 data dimension.
+            Whitening influenced somehow to initialize EM.
+          \item K-means
+            \begin{itemize}
+              \item without whitening - initial values \\ $ \begin{bmatrix}
+                  0.44172808 & 1.97553771 & -2.56665681 \\
+                  0.44933724 & -0.0330603 & -0.31820248
+              \end{bmatrix} $
+              \item with whitening - initial values \\ $ \begin{bmatrix}
+                -5.54268692 & 1.16714556 & -4.69918262 \\
+                0.108882 &  -0.08323771 & -0.65221037
+              \end{bmatrix} $
+            \end{itemize}
+            Calcutated mean value of initial values in each dimension became close to 0 after whitening.
+        \end{itemize}
 
         \clearpage
 	\section{Samples from a Gaussian Mixture Model}
