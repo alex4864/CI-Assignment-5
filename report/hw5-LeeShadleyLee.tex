@@ -121,7 +121,7 @@
 			\caption{K-means clustering with 3 centers}
 		\end{center}
 	\end{figure}
-
+	
 	Ultimately the K-means algorithm misclassified 13 samples, considerably worse than the EM algorithm, which we hypothesize is largely due to the limited explanatory power of the K-means approach.  Which is to say, since K-means classifies solely on euclidean distance, it lacks the finesse of the EM algorithm, which can employ a covariance matrix to describe more complex structures.
 
 	\clearpage
@@ -142,10 +142,10 @@
 			\caption{K $=$ 4}
 		\end{center}
 	\end{figure}
-
+	
 	The result of more or fewer clusters than 3, while clearly not ideal, is nonetheless fairly logical.  One can see that, as more clusters are added, what was originally a single cluster begins to be broken up into smaller, similarly sized and shaped clusters.  I also believe that K-means is a better algorithm for when distances between clusters are larger, since the algorithm seems to struggle especially with tightly packed clusters.
 
-	For initialization $\theta_0$, we selected at random as many points from the dataset as we needed centers, and used those selected points as the starting centers.  This has the beneficial for several reasons: first, it scales without modification for any number of centers less than the number of points, and second, it does not require the programmer to have any prior knowledge of the dataset they are analyzing.  This approach also ensures that every cluster is responsible for at least one point during the first iteration.
+	For initialization $\theta_0$, we selected at random as many points from the dataset as we needed centers, and used those selected points as the starting centers.  This has the beneficial for several reasons: first, it scales without modification for any number of centers less than the number of points, and second, it does not require the programmer to have any prior knowledge of the dataset they are analyzing.  This approach also ensures that every cluster is responsible for at least one point during the first iteration.	
 
 	\clearpage
 	\item plot the cumulative distance over the iterations! What is the behavior of this function over the iterations?
@@ -158,12 +158,12 @@
 	\end{figure}
 	The cumulative distance sharply decreases as the algorithm starts, indicating a quickly improving result, and shortly converges onto a solution.  Curiously, the cumulative distance does occasionally increase, indicating that across some iterations the result actually becomes slightly worse.\\
 
-	\end{itemize}
-
+	\end{itemize}	
+	
 	\clearpage
-
+	
 	\subsubsection{You may additionally choose any other pair of features; how would this change the classiﬁcation accuracy}
-
+	
 	The following figures are the scatter plots when two of four data columns are selected.
 	\begin{figure}[h!]
 		\centering
@@ -189,9 +189,9 @@
 			\includegraphics[width=1.0\textwidth]{34.png}
 		\end{minipage}
 	\end{figure}
-
+	
 	As shown in above figures, when first and third column are selected, we can draw a line to seperate the Iris-Virgnica and the Iris-Versicolor. That is, it is easy to differentiate these two groups. When other columns are selected, these two groups are mixed together. Therfore, EM algorithm also can not classify these two groups as different groups. For example, the worst one is when first and second columns are selected. When first and second columns are selected, the result is the following graph.
-
+	
 	\clearpage
 	\begin{figure}[h!]
 		\centering
@@ -205,8 +205,8 @@
 			\caption{EM algorithm classification}
 		\end{minipage}
 	\end{figure}
-
-	As expected, the EM alogirthm result is not classified well when first and second columns are selected. That is, the EM algorithm accuracy decreased.\\
+	
+	As expected, the EM alogirthm result is not classified well when first and second columns are selected. That is, the EM algorithm accuracy decreased.\\ 
 	Therfore, the column selection influences the EM algorithm accuracy.
 
 
@@ -214,7 +214,7 @@
 	\subsubsection{EM algorithm tasks}
 	\begin{itemize}
 		\item Compare the result with the labeled data set (i.e., consider labels as well). Make a scatter plot of the data and plot the Gaussian mixture model over this plot.
-
+		
 		\begin{figure}[h]
 			\begin{center}
 				\includegraphics[width=0.5\textwidth]{4_number_diff.png}
@@ -223,26 +223,26 @@
 		\end{figure}
 		First array is EM algorithm classification. Second array is answer classification.\\
 		Four points are mis-classified.
-
+		
 		\begin{figure}[h]
 			\begin{center}
 				\includegraphics[width=0.5\textwidth]{4_gauss.png}
 				\caption{Three gaussian with scatter data points}
 			\end{center}
 		\end{figure}
-
+		
 		EM algorithm suceeded to find three gaussian model and classified the data points well.
 		\clearpage
 		\item For your tests, select the correct number of components (K = 3), but also check the result when you use more or less components. How do you choose your initialization $\theta$0? Does this choice have an inﬂuence on the result
 		When the number of components is 2, the result is the following figure.
-
+		
 		\begin{figure}[h]
 			\begin{center}
 				\includegraphics[width=0.4\textwidth]{4_K2.png}
 				\caption{K $=$ 2}
 			\end{center}
 		\end{figure}
-
+		
 		When the number of components is 4, the result is the following figure.
 		\begin{figure}[h]
 			\begin{center}
@@ -250,12 +250,12 @@
 				\caption{K $=$ 4}
 			\end{center}
 		\end{figure}
-
+		
 		Initalizaiton $\theta$0 is the same with the dimension 2.\\
 		As written in section 1.1.1, the initialization process affects the result.
-
+		
 		\item plot the log-likelihood function over the iterations! What is the behavior of this function over the iterations?
-
+		
 		\begin{figure}[h]
 			\begin{center}
 				\includegraphics[width=0.4\textwidth]{4_log_likelihood.png}
@@ -263,10 +263,10 @@
 			\end{center}
 		\end{figure}
 		As shown in Figure 4, the log-likelihood increases over iterations. That is, likelihood increased over iterations. And about 25th iteration, the function looks convering to the value, -87.41158191236445.. Therfore, the process stops even though it didn't reach the max iteration number.\\
-
+		
 		\clearpage
 		\item Make a scatter plot of the data that shows the result of the soft-classiﬁcation that is done in the E-step
-
+		
 		\begin{figure}[h]
 			\begin{center}
 				\includegraphics[width=0.3\textwidth]{4class.png}
@@ -275,19 +275,79 @@
 				\caption{The answer classification}
 			\end{center}
 		\end{figure}
-
+		
 		The EM algorithm classifies well the points when it is compared with the answer classification. EM algorithm fails to classify the points near the boundary of iris-Versicolor and iris-Virgnica.
-
+		
 	\end{itemize}
-	\subsubsection{How do the convergence properties and the accuracy of you classiﬁcation change in comparison to scenario 2.1? }
+	
+	\subsubsection{K-means algorithm tasks}
+	\begin{itemize}
+		\item Compare the result with the labeled data set (i.e., consider labels as well). Make a scatter plot of the data.
+		
+	\begin{figure}[h]
+		\begin{center}
+			\includegraphics[width=0.5\textwidth]{4dim_data.png}
+			\caption{Original Data Labels}
+		\end{center}
+	\end{figure}
+
+	\begin{figure}[h]
+		\begin{center}
+			\includegraphics[width=0.5\textwidth]{kmeans_4dim.png}
+			\caption{K-means clustering with 3 centers}
+		\end{center}
+	\end{figure}
+	
+	In 4 dimensions, the K-means algorithm misclassified considerably fewer samples.  We take this to mean that having more features to operate improves clustering accuracy.
+
+\clearpage
+
+		\item For your tests, select the correct number of components (K = 3), but also check the result when you use more or less components. How do you choose your initialization $\theta$0? Does this choice have an inﬂuence on the result
+		The following image depicts a K-means clustering with 2 centers.
+	\begin{figure}[h]
+		\begin{center}
+			\includegraphics[width=0.4\textwidth]{kmeans_4dim_K2.png}
+			\caption{K $=$ 2}
+		\end{center}
+	\end{figure}
+
+	With 4 centers, K-means produces the following.
+	\begin{figure}[h]
+		\begin{center}
+			\includegraphics[width=0.4\textwidth]{kmeans_4dim_K4.png}
+			\caption{K $=$ 4}
+		\end{center}
+	\end{figure}
+	
+	Similar trends are seen in 4 dimensions as exist in 2 dimensions.
+		
+		\item plot the cumulative distance over the iterations! What is the behavior of this function over the iterations?
+		
+		\begin{figure}[h]
+			\begin{center}
+				\includegraphics[width=0.4\textwidth]{kmeans_4dim_conv.png}
+				\caption{The cumulative distance over iterations}
+			\end{center}
+		\end{figure}
+		This plot shows similar trends as with 2 dimensions.  The algorithm quickly converges to a solution, after which it cannot improve any further.\\
+		
+		
+	\end{itemize}	
+
+\clearpage
+
+	\subsubsection{How do the convergence properties and the accuracy of you classification change in comparison to scenario 2.1? }
 	\begin{itemize}
 		\item EM-algorithm \\
 		The convergence value of log likelihood function increased. In the scenario 2.1, the value was -112.96. However, in the scenario 2.2, the value increased to -87.41. Also, the total iteration decreased in the scenario 2.2. The value decreased from 75 to 26.\\
 		Also, we compared the scenario 2.1 and 2.2 with each 10 trials. Overall, the EM classifies the data points better in 2.2 scenario. The accuarcy of 2.2 scenario is higher than that of 2.1 scenario. Because the EM algorithm in 2.2 scenario has more additional information about the dataset.
-
+		
+		\item K-means algorithm \\
+		Cumulative distance was about 20 higher in scenario 2.2 versus 2.1, while the clustering was more accurate for scenario 2.2.  This can be explained by the fact that with euclidean distances, more dimensions will generally increase distance.  Nonetheless, the additional insight gained by clustering with all 4 features significantly improved our results.
+		 
 	\end{itemize}
-
-	\subsubsection{Within your EM-function conﬁne the structure of the covariance matrices to diagonal matrices! What is the inﬂuence on the result.}
+	
+	\subsubsection{Within your EM-function confine the structure of the covariance matrices to diagonal matrices! What is the influence on the result.}
         \clearpage
 	\subsection{Processing the data with PCA }
 	\subsubsection{How much of the variance in the data is explained this way?}
@@ -300,7 +360,6 @@
 
           Scenario 2.1 has no difference at performance for both algorithms. Actually it takes more time to do PCA.
           The amount of explained variance is 1. The data from PCA is rotated original data that eigenvectors are the axes.
-          The number of misclassified points was 2 with EM and 13 with K-means. It showed same behavior with scenario 1.
 
           \begin{figure}[h!]
             \centering
@@ -322,9 +381,6 @@
               \includegraphics[width=1.0\textwidth]{pca_em_1_3.png}
               \caption{scatter plot with Gaussian for scenario 1. EM}
             \end{minipage}
-          \end{figure}
-          \clearpage
-          \begin{figure}[h!]
             \begin{minipage}[t]{6.5cm}
               \includegraphics[width=1.0\textwidth]{pca_k_1_1.png}
               \caption{scatter plot for scenario 1. K-means}
@@ -334,30 +390,9 @@
               \includegraphics[width=1.0\textwidth]{pca_k_1_2.png}
               \caption{cumulative distance for k-means plot for scenario 1. K-means}
             \end{minipage}
-            \begin{minipage}[t]{6.5cm}
-              \includegraphics[width=1.0\textwidth]{pca_em_s1_2.png}
-              \caption{scatter plot for scenario 1. EM. K = 2}
-            \end{minipage}
-            \hspace{2cm}
-            \begin{minipage}[t]{6.5cm}
-              \includegraphics[width=1.0\textwidth]{pca_em_s1_4.png}
-              \caption{scatter plot for scenario 1. EM. K = 4}
-            \end{minipage}
-            \begin{minipage}[t]{6.5cm}
-              \includegraphics[width=1.0\textwidth]{pca_k_s1_2.png}
-              \caption{scatter plot for scenario 1. K-means. K = 2}
-            \end{minipage}
-            \hspace{2cm}
-            \begin{minipage}[t]{6.5cm}
-              \includegraphics[width=1.0\textwidth]{pca_k_s1_4.png}
-              \caption{scatter plot for scenario 1. K-means. K = 4}
-            \end{minipage}
           \end{figure}
 
-        EM showed better performance in scenario 2.2. PCA reduced the dimension of data
-        to 2 so it took less time and showed more accuracy. The number of misclassified point was 3 in average.
-        It is slightly less value compared to 4 in scenario 2. K-means also had shorter running time.
-        The number of misclassified point was 9 in average.
+        EM showed better performance in scenario 2.2. PCA reduced the dimension of data to 2 so it took less time and showed more accuracy.
 
         \begin{figure}[h!]
             \centering
@@ -388,28 +423,8 @@
               \includegraphics[width=1.0\textwidth]{pca_k_2_2.png}
               \caption{cumulative distance for k-means plot for scenario 2. K-means}
             \end{minipage}
-            \begin{minipage}[t]{6.5cm}
-              \includegraphics[width=1.0\textwidth]{pca_em_s2_2.png}
-              \caption{scatter plot for scenario 2. EM. K = 2}
-            \end{minipage}
-            \hspace{2cm}
-            \begin{minipage}[t]{6.5cm}
-              \includegraphics[width=1.0\textwidth]{pca_em_s2_4.png}
-              \caption{scatter plot for scenario 2. EM. K = 4}
-            \end{minipage}
         \end{figure}
         \clearpage
-        \begin{figure}[h!]
-            \begin{minipage}[t]{6.5cm}
-              \includegraphics[width=1.0\textwidth]{pca_k_s2_2.png}
-              \caption{scatter plot for scenario 2. K-means. K = 2}
-            \end{minipage}
-            \hspace{2cm}
-            \begin{minipage}[t]{6.5cm}
-              \includegraphics[width=1.0\textwidth]{pca_k_s2_4.png}
-              \caption{scatter plot for scenario 2. K-means. K = 4}
-            \end{minipage}
-        \end{figure}
 	\subsubsection{Apply PCA with whitening, so that the transformed data has zero mean and a unit covariance matrix. How does this influence the choice of your initialization?}
         Compared PCA without whitening and PCA with whitening on scenario 2(4 dimension $\rightarrow$ 2 dimension), initialization result is below.
         \begin{itemize}
