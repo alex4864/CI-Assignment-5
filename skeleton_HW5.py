@@ -58,7 +58,7 @@ def main():
     #set parameters
     tol = .01  # tolerance
     max_iter = 200  # maximum iterations for GN
-    nr_components = 3 #n number of components
+    nr_components = 2 #n number of components
  
     #implement
     (alpha_0, mean_0, cov_0) = init_EM(x_4dim,dimension = dim, nr_components= nr_components, scenario=scenario)
@@ -67,7 +67,7 @@ def main():
     centers, cumulative_distance, labels = k_means(x_4dim,nr_components, initial_centers, max_iter, tol)
  
     #visualize your results by looking at the same slice as in 1)
-    draw_EM(x_4dim,mean_0, cov_0, arr_log_likelihood, class_labels)
+    #draw_EM(x_4dim,mean_0, cov_0, arr_log_likelihood, class_labels)
     draw_kmeans(x_4dim, centers, labels, cumulative_distance)
  
     #------------------------
