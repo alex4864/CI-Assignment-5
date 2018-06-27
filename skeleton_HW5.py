@@ -18,105 +18,105 @@ from sklearn import datasets
 def main():
     #------------------------
     # 0) Get the input
-    ## (a) load the modified iris data
+    # (a) load the modified iris data
     data, llabels = load_iris_data()
 
-    ## (b) construct the datasets
+    # (b) construct the datasets
     x_2dim = data[:, [0,2]]
     x_4dim = data
 
-    ## (c) visually inspect the data with the provided function (see example below)
-#     plot_iris_data(x_4dim,llabels)
+    # (c) visually inspect the data with the provided function (see example below)
+    plot_iris_data(x_4dim,llabels)
 
     #------------------------
     # 1) Consider a 2-dim slice of the data and evaluate the EM- and the KMeans- Algorithm
     scenario = 1
-    dim = 4
-    nr_components = 2
+    dim = 2
+    nr_components = 3
 
-    #TODO set parameters
+    #set parameters
     tol = .01  # tolerance
     max_iter = 200  # maximum iterations for GN
     nr_components = 3 #n number of components
 
-    #TODO: implement
-#    (alpha_0, mean_0, cov_0) = init_EM(x_4dim,dimension = dim, nr_components= nr_components, scenario=scenario)
-#    (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_4dim,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
+    #implement
+    (alpha_0, mean_0, cov_0) = init_EM(x_2dim,dimension = dim, nr_components= nr_components, scenario=scenario)
+    (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_2dim,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
     initial_centers = init_k_means(x_2dim, dimension = dim, nr_clusters=nr_components, scenario=scenario)
     centers, cumulative_distance, labels = k_means(x_2dim, nr_components, initial_centers, max_iter, tol)
 
-    #TODO visualize your results
-#    draw_EM(x_4dim,mean_0, cov_0, arr_log_likelihood, class_labels)
+    #visualize your results
+    draw_EM(x_2dim,mean_0, cov_0, arr_log_likelihood, class_labels)
     draw_kmeans(x_2dim, centers, labels, cumulative_distance)
-# 
-#     #------------------------
-#     # 2) Consider 4-dimensional data and evaluate the EM- and the KMeans- Algorithm
-#     scenario = 2
-#     dim = 4
-#     nr_components = 3
-# 
-#     #TODO set parameters
-#     #tol = ...  # tolerance
-#     #max_iter = ...  # maximum iterations for GN
-#     #nr_components = ... #n number of components
-# 
-#     #TODO: implement
-#     #(alpha_0, mean_0, cov_0) = init_EM(dimension = dim, nr_components= nr_components, scenario=scenario)
-#     #... = EM(x_2dim, nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
-#     #initial_centers = init_k_means(dimension = dim, nr_cluster=nr_components, scenario=scenario)
-#     #... = k_means(x_2dim,nr_components, initial_centers, max_iter, tol)
-# 
-#     #TODO: visualize your results by looking at the same slice as in 1)
-# 
-# 
-#     #------------------------
-#     # 3) Perform PCA to reduce the dimension to 2 while preserving most of the variance.
-#     # Then, evaluate the EM- and the KMeans- Algorithm  on the transformed data
-#     #TODO: implement PCA
-#     (x_2dim_pca, explained) = PCA(data,nr_dimensions=2,whitening=False)
-# 
-#     scenario = 3
-#     dim = 4
-#     nr_components = 3
-# 
-#     #TODO set parameters
-#     #tol = ...  # tolerance
-#     #max_iter = ...  # maximum iterations for GN
-#     #nr_components = ... #n number of components
-# 
-#     #TODO: implement
-#     (alpha_0, mean_0, cov_0) = init_EM(x_2dim_pca, dimension = dim, nr_components= nr_components, scenario=scenario)
-#     (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_2dim_pca,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
-#     initial_centers = init_k_means(x_2dim_pca, dimension = dim, nr_clusters=nr_components, scenario=scenario)
-#     centers, cumulative_distance, labels = k_means(x_2dim_pca, nr_components, initial_centers, max_iter, tol)
-# 
-#     #TODO visualize your results
-#     plot_iris_data(x_2dim_pca, llabels)
-#     draw_EM(x_2dim_pca,mean_0, cov_0, arr_log_likelihood, class_labels)
-#     draw_kmeans(x_2dim_pca, centers, labels, cumulative_distance)
-# 
-#     #TODO: compare PCA as pre-processing (3.) to PCA as post-processing (after 2.)
-# 
-#     #pdb.set_trace()
-# 
-#     #GMM
-#     alpha = np.array([[0.05, 0.2, 0.3, 0.45]])
-#     mu = np.array([[4, 4], [-2, 2], [0, 0], [-2, -3]])
-#     cov = np.array([
-#         [[.2, 0],
-#          [0, .2]],
-#         [[.3, 0],
-#          [0, .3]],
-#         [[.2, .1],
-#          [.1, .2]],
-#         [[1, 0],
-#          [0, .1]]
-#     ])
-# 
-#     Y = sample_GMM(alpha, mu, cov, 100)
-# 
-#     plt.scatter(Y[:,0], Y[:,1])
-#     plt.show()
+ 
+    #------------------------
+    # 2) Consider 4-dimensional data and evaluate the EM- and the KMeans- Algorithm
+    scenario = 2
+    dim = 4
+    nr_components = 3
+ 
+    #set parameters
+    tol = .01  # tolerance
+    max_iter = 200  # maximum iterations for GN
+    nr_components = 3 #n number of components
+ 
+    #implement
+    (alpha_0, mean_0, cov_0) = init_EM(x_4dim,dimension = dim, nr_components= nr_components, scenario=scenario)
+    (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_4dim, nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
+    initial_centers = init_k_means(x_4dim, dimension = dim, nr_cluster=nr_components, scenario=scenario)
+    centers, cumulative_distance, labels = k_means(x_4dim,nr_components, initial_centers, max_iter, tol)
+ 
+    #visualize your results by looking at the same slice as in 1)
+    draw_EM(x_2dim,mean_0, cov_0, arr_log_likelihood, class_labels)
+    draw_kmeans(x_2dim, centers, labels, cumulative_distance)
+ 
+    #------------------------
+    # 3) Perform PCA to reduce the dimension to 2 while preserving most of the variance.
+    # Then, evaluate the EM- and the KMeans- Algorithm  on the transformed data
+    
+    (x_2dim_pca, explained) = PCA(data,nr_dimensions=2,whitening=False)
+ 
+    scenario = 3
+    dim = 4
+    nr_components = 3
+ 
+    #set parameters
+    tol = .01  # tolerance
+    max_iter = 200  # maximum iterations for GN
+    nr_components = 3 #n number of components
+ 
+    #implement
+    (alpha_0, mean_0, cov_0) = init_EM(x_2dim_pca, dimension = dim, nr_components= nr_components, scenario=scenario)
+    (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_2dim_pca,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
+    initial_centers = init_k_means(x_2dim_pca, dimension = dim, nr_clusters=nr_components, scenario=scenario)
+    centers, cumulative_distance, labels = k_means(x_2dim_pca, nr_components, initial_centers, max_iter, tol)
+ 
+    #visualize your results
+    plot_iris_data(x_2dim_pca, llabels)
+    draw_EM(x_2dim_pca,mean_0, cov_0, arr_log_likelihood, class_labels)
+    draw_kmeans(x_2dim_pca, centers, labels, cumulative_distance)
+ 
+    #compare PCA as pre-processing (3.) to PCA as post-processing (after 2.)
+    pdb.set_trace()
+ 
+    #GMM
+    alpha = np.array([[0.05, 0.2, 0.3, 0.45]])
+    mu = np.array([[4, 4], [-2, 2], [0, 0], [-2, -3]])
+    cov = np.array([
+        [[.2, 0],
+         [0, .2]],
+        [[.3, 0],
+         [0, .3]],
+        [[.2, .1],
+         [.1, .2]],
+        [[1, 0],
+         [0, .1]]
+    ])
+ 
+    Y = sample_GMM(alpha, mu, cov, 100)
+ 
+    plt.scatter(Y[:,0], Y[:,1])
+    plt.show()
 
 def sample_GMM(alpha, mu, cov, N):
     #assert sum(alpha) == 1
@@ -143,17 +143,19 @@ def sample_GMM(alpha, mu, cov, N):
 
 def draw_EM(points,mean_0, cov_0, arr_log_likelihood, labels):
 
-#     newLabel = reassign_class_labels(labels)
-#     for label in np.nditer(labels, op_flags=['readwrite']):
-#         label[...] = newLabel[label]
-#     plot_iris_data(points, labels)
-# 
-#     x = arr_log_likelihood.size
-#     plt.title("log likelihood function")
-#     plt.xlabel("iterations")
-#     plt.ylabel("log-likelihood")
-#     plt.scatter(np.arange(x), arr_log_likelihood)
-#     plt.show()
+    #label setting for ploting
+    newLabel = reassign_class_labels(labels)
+    for label in np.nditer(labels, op_flags=['readwrite']):
+        label[...] = newLabel[label]
+    plot_iris_data(points, labels)
+ 
+    #print log likelihood function
+    x = arr_log_likelihood.size
+    plt.title("log likelihood function")
+    plt.xlabel("iterations")
+    plt.ylabel("log-likelihood")
+    plt.scatter(np.arange(x), arr_log_likelihood)
+    plt.show()
 
     xmin = 4
     xmax = 8
@@ -167,7 +169,7 @@ def draw_EM(points,mean_0, cov_0, arr_log_likelihood, labels):
 #     ymin = -2
 #     ymax = 2
 
-
+    #print gauss function
     for i in range(points.shape[0]):
         for j in range(mean_0.shape[1]):
             if labels[i] == j:
