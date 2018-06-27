@@ -427,5 +427,50 @@
         \clearpage
 	\section{Samples from a Gaussian Mixture Model}
 	\subsection{Write a function Y = sample-GMM(alpha, mu, cov, N)}
+	
+	Our algorithm works first by constructing a discrete distribution from the alpha values of each Gaussian Distribution, then using this discrete distribution to assign each sample to a Gaussian Distribution, and finally placing the sample according to its assigned Gaussian Distribution.  The probability of each Gaussian Distribution being selected for a new sample is equal to its corresponding alpha value.
+	
 	\subsection{Using a GMM of your choice$ (K > 3)$, demonstrate the correctness of your function}
+	
+	\begin{figure}[h]
+			\begin{center}
+				\includegraphics[width=0.4\textwidth]{GMM_samples.png}
+				\caption{100 Samples drawn from a Gaussian Mixture Model}
+			\end{center}
+		\end{figure}
+	
+	This result demonstrates the correctness of our algorithm.  For parameters we used the following alpha values: [0.05, 0.2, 0.3, 0.45] and following mean values: [(4, 4), (-4, 4), (0, 0), (-4, -6)].  You can see that the Gaussian Distribution centered at (4, 4) has a very low alpha (0.05), since it has so few points compared to the others.  The covariance matrices are as follows.
+	
+	\[
+	\Sigma_1 = 
+ 	\begin{bmatrix}
+  	.2 & 0 \\
+  	0 & .2
+ 	\end{bmatrix}
+ 	\]
+	
+	\[	
+	\Sigma_2 = 
+ 	\begin{bmatrix}
+  	.3 & 0 \\
+  	0 & .3
+ 	\end{bmatrix}
+ 	\]
+	
+	\[
+	\Sigma_3 = 
+ 	\begin{bmatrix}
+  	.3 & .25 \\
+  	.25 & .3
+ 	\end{bmatrix}
+ 	\]
+ 	
+ 	\[
+ 	\Sigma_4 = 
+ 	\begin{bmatrix}
+  	1 & 0 \\
+  	0 & .1
+ 	\end{bmatrix}
+	\]
+	
 \end{document}

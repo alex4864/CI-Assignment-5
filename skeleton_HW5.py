@@ -42,12 +42,12 @@ def main():
     #TODO: implement
 #    (alpha_0, mean_0, cov_0) = init_EM(x_4dim,dimension = dim, nr_components= nr_components, scenario=scenario)
 #    (alpha_0, mean_0, cov_0, arr_log_likelihood, class_labels) = EM(x_4dim,nr_components, alpha_0, mean_0, cov_0, max_iter, tol)
-    initial_centers = init_k_means(x_2dim, dimension = dim, nr_clusters=nr_components, scenario=scenario)
-    centers, cumulative_distance, labels = k_means(x_2dim, nr_components, initial_centers, max_iter, tol)
+#    initial_centers = init_k_means(x_2dim, dimension = dim, nr_clusters=nr_components, scenario=scenario)
+#    centers, cumulative_distance, labels = k_means(x_2dim, nr_components, initial_centers, max_iter, tol)
 
     #TODO visualize your results
 #    draw_EM(x_4dim,mean_0, cov_0, arr_log_likelihood, class_labels)
-    draw_kmeans(x_2dim, centers, labels, cumulative_distance)
+#    draw_kmeans(x_2dim, centers, labels, cumulative_distance)
 # 
 #     #------------------------
 #     # 2) Consider 4-dimensional data and evaluate the EM- and the KMeans- Algorithm
@@ -100,23 +100,24 @@ def main():
 #     #pdb.set_trace()
 # 
 #     #GMM
-#     alpha = np.array([[0.05, 0.2, 0.3, 0.45]])
-#     mu = np.array([[4, 4], [-2, 2], [0, 0], [-2, -3]])
-#     cov = np.array([
-#         [[.2, 0],
-#          [0, .2]],
-#         [[.3, 0],
-#          [0, .3]],
-#         [[.2, .1],
-#          [.1, .2]],
-#         [[1, 0],
-#          [0, .1]]
-#     ])
-# 
-#     Y = sample_GMM(alpha, mu, cov, 100)
-# 
-#     plt.scatter(Y[:,0], Y[:,1])
-#     plt.show()
+    alpha = np.array([[0.05, 0.2, 0.3, 0.45]])
+    mu = np.array([[4, 4], [-4, 4], [0, 0], [-4, -6]])
+    cov = np.array([
+        [[.2, 0],
+         [0, .2]],
+        [[.3, 0],
+         [0, .3]],
+        [[.3, .25],
+         [.25, .3]],
+        [[1, 0],
+         [0, .1]]
+    ])
+
+    Y = sample_GMM(alpha, mu, cov, 100)
+
+    plt.title('Samples From a Gaussian Mixture Model K=4')
+    plt.scatter(Y[:,0], Y[:,1])
+    plt.show()
 
 def sample_GMM(alpha, mu, cov, N):
     #assert sum(alpha) == 1
