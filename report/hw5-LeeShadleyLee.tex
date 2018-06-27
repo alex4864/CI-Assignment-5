@@ -183,7 +183,55 @@
 	The EM algorithm classifies well the points when it is compared with the answer classification. EM algorithm fails to classify the points near the boundary of iris-Versicolor and iris-Virgnica.
 	\end{itemize}	
 	
+	\clearpage
+	
 	\subsubsection{You may additionally choose any other pair of features; how would this change the classiﬁcation accuracy}
+	
+	The following figures are the scatter plots when two of four data columns are selected.
+	\begin{figure}[h!]
+		\centering
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{12.png}
+		\end{minipage}
+		\hspace{2cm}
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{13.png}
+		\end{minipage}
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{14.png}
+		\end{minipage}
+		\hspace{2cm}
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{23.png}
+		\end{minipage}
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{24.png}
+		\end{minipage}
+		\hspace{2cm}
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{34.png}
+		\end{minipage}
+	\end{figure}
+	
+	As shown in above figures, when first and third column are selected, we can draw a line to seperate the Iris-Virgnica and the Iris-Versicolor. That is, it is easy to differentiate these two groups. When other columns are selected, these two groups are mixed together. Therfore, EM algorithm also can not classify these two groups as different groups. For example, the worst one is when first and second columns are selected. When first and second columns are selected, the result is the following graph.
+	
+	\clearpage
+	\begin{figure}[h!]
+		\centering
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{12.png}
+			\caption{The answer classfication}
+		\end{minipage}
+		\hspace{2cm}
+		\begin{minipage}[t]{6.5cm}
+			\includegraphics[width=1.0\textwidth]{12_p.png}
+			\caption{EM algorithm classification}
+		\end{minipage}
+	\end{figure}
+	
+	As expected, the EM alogirthm result is not classified well when first and second columns are selected. That is, the EM algorithm accuracy decreased.\\ 
+	Therfore, the column selection influences the EM algorithm accuracy.
+
 
 	\subsection{4 dimensional feature}
 	\subsubsection{EM algorithm tasks}
@@ -207,7 +255,7 @@
 		\end{figure}
 		
 		EM algorithm suceeded to find three gaussian model and classified the data points well.
-		
+		\clearpage
 		\item For your tests, select the correct number of components (K = 3), but also check the result when you use more or less components. How do you choose your initialization $\theta$0? Does this choice have an inﬂuence on the result
 		When the number of components is 2, the result is the following figure.
 		
@@ -218,7 +266,6 @@
 			\end{center}
 		\end{figure}
 		
-		\clearpage
 		When the number of components is 4, the result is the following figure.
 		\begin{figure}[h]
 			\begin{center}
